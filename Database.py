@@ -1,1 +1,1 @@
-players = {}
+players: dict[str, object] = {}
