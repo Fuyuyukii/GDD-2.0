@@ -1,1 +1,1 @@
-players = dict
+players = {}

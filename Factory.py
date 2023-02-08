@@ -3,10 +3,15 @@ from Player import player
 from Database import players
 
 
-# def factory(class_in_use, fill=False):
-#     if fill:
-        
-
+def factory(class_in_use, fill=False):
+     if fill:
+        invalid_attributes = ["id", "self"]
+        id = next(id_generator(class_in_use))
+        create_object(class_in_use, id)
+        for attribute in get_attrs(class_in_use):
+            if attribute not in invalid_attributes:
+                id.attribute = input(f"A value for {attribute}: ")
+            
 
 def id_generator(class_in_use):
     letters = ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "L", "L", "M",
@@ -29,9 +34,13 @@ def get_attrs(class_in_use):
 
 
 def create_object(class_in_use, id):
-    if id not in class_in_use.objects:
-        class_in_use.objects[id] = class_in_use(id)
-    return class_in_use.objects[id]
+    class_objects = class_in_use.objects
+    if id not in class_objects:
+        class_objects[id] = class_in_use(id)
+    return class_objects[id]
 
-
-factory(player, True)
+# factory(player, True)
+create_object(player, "PL1")
+print(players)
+macaco = player(21, "macaco")
+macaco.__id
