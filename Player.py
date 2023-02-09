@@ -9,10 +9,10 @@ class player:
     objects = players
     invalid_attributes = ["id"]
 
-
-    def __init__(self, id, name: str = 'None'):
+    def __init__(self, id, name: str = 'None', hp: int = 0, mp: int = 0, party=None):
         self.__id = id
         self.__name = name
+        self.__lvl = 1
 
     # Properties
 
