@@ -27,9 +27,9 @@ def id_generator(class_in_use):
                "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
     while True:
         yield f"{class_in_use.class_identifier}_{letters[class_in_use.current_letter]}{class_in_use.id_number:03}"
-        if classes_generators[class_in_use.class_identifier] == 100:
+        if class_in_use.id_number == 1000:
             class_in_use.current_letter += 1
-            class_in_use.id_number += 1
+            class_in_use.id_number = 1
         else:
             class_in_use.id_number += 1
 
