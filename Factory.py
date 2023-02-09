@@ -1,15 +1,24 @@
 import inspect
+from Database import classes_generator
 from Player import player
-from Database import players
 
 
 def factory(class_in_use, fill=False):
     if fill:
         obj = create_object(class_in_use)
         for attribute in get_attrs(class_in_use):
-            attribute_type = type(obj.attribute)
             if attribute not in class_in_use.invalid_attributes:
-                setattr(obj, attribute, attribute_type(input(f"A value for {attribute}: ")))
+                while True:
+                    attribute_type = type(getattr(obj, attribute))
+                    try:
+                        user_input = attribute_type(input(f"A value for {attribute}: "))
+                        setattr(obj, attribute, user_input)
+                        break
+                    except ValueError:
+                        type_representation = str(attribute_type).split("'")[1]
+                        print(f"the entered value, didn't match with the attribute({attribute}) type: {type_representation}.")
+    else:
+        create_object(class_in_use)
 
 
 def id_generator(class_in_use):
@@ -34,13 +43,13 @@ def get_attrs(class_in_use):
 
 def create_object(class_in_use):
     class_objects = class_in_use.objects
-
-    id = next(id_generator(class_in_use))
-
+    if class_in_use.class_identifier not in classes_generator:
+        classes_generator[class_in_use.class_identifier] = id_generator(class_in_use)
+    id = next(classes_generator[class_in_use.class_identifier])
     if id not in class_objects:
         key = class_in_use(id)
         class_objects[id] = key
     return class_objects[id]
 
 
-factory(player, True)
+factory(player)

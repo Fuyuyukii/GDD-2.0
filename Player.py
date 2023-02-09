@@ -9,7 +9,7 @@ class player:
     objects = players
     invalid_attributes = ["id"]
 
-    def __init__(self, id, name: str = 'None'):
+    def __init__(self, id, name: int = 0):
         self.__id = id
         self.__name = name
 
