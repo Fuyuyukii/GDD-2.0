@@ -1,3 +1,3 @@
-classes_generators = {} #classe's generators
+classes_generators = {}  # class's generators
 
 players: dict[str, object] = {}

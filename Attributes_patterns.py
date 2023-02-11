@@ -1,10 +1,9 @@
-class Basic_attributes:
+class creature_pattern:
 
-    def __init__(self, id, name: str = 'None', hp: int = 0, mp: int = 0, party=None):
+    def __init__(self, id, name: str = 'None', hp: int = 0, mp: int = 0):
         self.__id = id
         self.__name = name
         self.__lvl = 1
-        self.__party = party
         self.__experience = 0
         self.__inventory = list()
         self.__Max_hp = hp
@@ -67,18 +66,10 @@ class Basic_attributes:
         return self.__Max_mp
 
     @Max_mp.setter
-    def mp(self, value):
+    def Max_mp(self, value):
         self.__Max_mp = value
 
     # Attributes Properties
-
-    @property
-    def party(self):
-        return self.__party
-
-    @party.setter
-    def party(self, value): # tem q dar um mexida nisso aqui, n ta feito direito
-        self.__party = value
 
     @property
     def inventory(self):
@@ -86,11 +77,11 @@ class Basic_attributes:
 
     def inventory_add(self, value):
         self.__inventory.append(value)
-    
+
     @property
     def experience(self):
         return self.__experience
 
     @experience.setter
-    def gain_experience(self, value):
+    def experience(self, value):
         self.__experience = value
