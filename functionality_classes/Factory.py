@@ -1,6 +1,6 @@
 import inspect
-from Database import classes_generators
-
+from functionality_classes.Database import classes_generators
+from Player import player
 
 def factory(class_in_use, generate=1 ,fill=False):
     if fill:
@@ -11,6 +11,7 @@ def factory(class_in_use, generate=1 ,fill=False):
                     while True:
                         attribute_type = type(getattr(obj, attribute))
                         try:
+                            print(f"{obj.__class__.__name__}-id:{obj.id}")
                             user_input = attribute_type(input(f"A value for {attribute}: "))
                             setattr(obj, attribute, user_input)
                             break
@@ -37,17 +38,20 @@ def id_generator(class_in_use):
 def get_attrs(class_in_use):
     attrs = []
     sig = inspect.signature(class_in_use)
-    for name, param in sig.parameters.items():
-        attrs.append(name)
+    for attribute_name, _ in sig.parameters.items():
+        attrs.append(attribute_name)
     return attrs
 
 
 def create_object(class_in_use):
     class_objects = class_in_use.objects
-    if class_in_use.class_identifier not in classes_generators:
-        classes_generators[class_in_use.class_identifier] = id_generator(class_in_use)
-    id = next(classes_generators[class_in_use.class_identifier])
+    class_identifier = class_in_use.class_identifier
+    if class_identifier not in classes_generators: # check if class's generator already exists
+        classes_generators[class_identifier] = id_generator(class_in_use) # if not, the generator is add
+    id = next(classes_generators[class_identifier])
     if id not in class_objects:
         key = class_in_use(id)
         class_objects[id] = key
     return class_objects[id]
+
+factory(player, 1, True)

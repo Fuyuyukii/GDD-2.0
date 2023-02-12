@@ -1,6 +1,5 @@
-from Database import players
-from Attributes_patterns import creature_pattern
-
+from functionality_classes.Database import players
+from patterns_classes.Creature_pattern import creature_pattern
 
 class player(creature_pattern):
     class_identifier = "PL"
@@ -15,6 +14,3 @@ class player(creature_pattern):
         self.__party = party
 
     # Properties
-
-
-a = player(1, "macaco", 0, 0, None)

@@ -11,7 +11,7 @@ class creature_pattern:
         self.__Max_mp = mp
         self.__mp = mp
 
-    # Attributes Properties
+    # Properties
 
     @property
     def id(self):
