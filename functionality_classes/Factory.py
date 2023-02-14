@@ -1,6 +1,7 @@
 import inspect
-from functionality_classes.Database import classes_generators
-from Player import player
+from Database import classes_generators
+from classes import Player
+
 
 def factory(class_in_use, generate=1 ,fill=False):
     if fill:
@@ -28,13 +29,15 @@ def id_generator(class_in_use):
                "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
     while True:
         yield f"{class_in_use.class_identifier}_{letters[class_in_use.current_letter]}{class_in_use.id_number:03}"
+        # when the object reach the number 1000, so, the generation is changed, going to next letter
         if class_in_use.id_number == 1000:
             class_in_use.current_letter += 1
             class_in_use.id_number = 1
-        else:
+        else: # else, it just increase the number of the object id
             class_in_use.id_number += 1
 
 
+# to get attributes from the class
 def get_attrs(class_in_use):
     attrs = []
     sig = inspect.signature(class_in_use)
@@ -49,9 +52,10 @@ def create_object(class_in_use):
     if class_identifier not in classes_generators: # check if class's generator already exists
         classes_generators[class_identifier] = id_generator(class_in_use) # if not, the generator is add
     id = next(classes_generators[class_identifier])
-    if id not in class_objects:
+    #verify if the id generated don't exists
+    if id not in class_objects: 
         key = class_in_use(id)
         class_objects[id] = key
     return class_objects[id]
 
-factory(player, 1, True)
+factory(player, 5)
