@@ -1,11 +1,11 @@
 class creature_pattern:
 
-    def __init__(self, id, name: str = 'None', hp: int = 0, mp: int = 0):
+    def __init__(self, id, name: str = 'N/A', hp: int = 0, mp: int = 0):
         self.__id = id
         self.__name = name
         self.__lvl = 1
         self.__experience = 0
-        self.__inventory = list()
+        self.__inventory = {}
         self.__Max_hp = hp
         self.__hp = hp
         self.__Max_mp = mp
@@ -75,8 +75,8 @@ class creature_pattern:
     def inventory(self):
         return self.__inventory
 
-    def inventory_add(self, value):
-        self.__inventory.append(value)
+    def inventory_add(self, item_id, item_obj):
+        self.__inventory[item_id] = item_obj
 
     @property
     def experience(self):

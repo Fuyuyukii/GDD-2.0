@@ -1,9 +1,7 @@
 import inspect
-from Database import classes_generators
-from classes import Player
+from functionality_classes.Database import classes_generators
 
-
-def factory(class_in_use, generate=1 ,fill=False):
+def factory(class_in_use, generate=1, fill=False):
     if fill:
         for _ in range(generate):
             obj = create_object(class_in_use)
@@ -18,7 +16,8 @@ def factory(class_in_use, generate=1 ,fill=False):
                             break
                         except ValueError:
                             type_representation = str(attribute_type).split("'")[1]
-                            print(f"the entered value, didn't match with the attribute({attribute}) type: {type_representation}.")
+                            print(
+                                f"the entered value, didn't match with the attribute({attribute}) type: {type_representation}.")
     else:
         for _ in range(generate):
             create_object(class_in_use)
@@ -33,7 +32,7 @@ def id_generator(class_in_use):
         if class_in_use.id_number == 1000:
             class_in_use.current_letter += 1
             class_in_use.id_number = 1
-        else: # else, it just increase the number of the object id
+        else:  # else, it just increases the number of the object id
             class_in_use.id_number += 1
 
 
@@ -47,15 +46,12 @@ def get_attrs(class_in_use):
 
 
 def create_object(class_in_use):
-    class_objects = class_in_use.objects
+    class_objects = class_in_use.objects_storage
     class_identifier = class_in_use.class_identifier
-    if class_identifier not in classes_generators: # check if class's generator already exists
-        classes_generators[class_identifier] = id_generator(class_in_use) # if not, the generator is add
+    if class_identifier not in classes_generators:  # check if class's generator already exists
+        classes_generators[class_identifier] = id_generator(class_in_use)  # if not, the generator is added
     id = next(classes_generators[class_identifier])
-    #verify if the id generated don't exists
-    if id not in class_objects: 
+    if id not in class_objects:  # verify if the id generated don't exist
         key = class_in_use(id)
         class_objects[id] = key
     return class_objects[id]
-
-factory(player, 5)

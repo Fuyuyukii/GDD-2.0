@@ -1,6 +1,6 @@
 from functionality_classes.Database import players, parties
 from patterns_classes.Creature_pattern import creature_pattern
-from fuzzywuzzy import fuzz
+from functionality_classes.general_features import find_similar_name
 
 
 class player(creature_pattern):
@@ -8,31 +8,26 @@ class player(creature_pattern):
     current_letter = 0  # show in which generation the object are in.
     id_number = 0
 
-    objects = players
+    objects_storage = players
     invalid_attributes = ["id"]
 
-    def __init__(self, id, name: str = 'None', hp: int = 0, mp: int = 0, party=None):
+    def __init__(self, id, name: str = 'N/A', hp: int = 0, mp: int = 0, party=''):
         super().__init__(id, name, hp, mp)
         self.__party = party
 
+    # internal functions
+
+    # properties
+
+    @property
+    def party(self):
+        return self.__party
+
+    @party.setter
     def party(self, value):
-        pass
-
-# funcionality functions
-
-def find_similiar_and_id(input_string):
-    best_match = ''
-    best_score = 0
-    for i in player.objects:
-        obj = i.name
-        obj_id = i.id
-        score = fuzz.ratio(input_string, obj)
-        if score > best_score:
-            best_match = obj
-            best_score = score
-    return best_match, obj_id
-
-
-    
-        
-            
+        try:
+            party_id = find_similar_name(value, parties)
+            party_id.add_member(self)
+            self.__party = party_id
+        except AttributeError as e:
+            print("Error setting party:", e)
